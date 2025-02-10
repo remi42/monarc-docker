@@ -12,7 +12,7 @@ services:
     image: mariadb:11.4
     environment:
       - MYSQL_ROOT_PASSWORD=demo
-      - MYSQL_DATABASE=monarc_cli,monarc_common
+      - MYSQL_DATABASE=monarc
       - MYSQL_USER=monarc
       - MYSQL_PASSWORD=demo
     ports:
@@ -25,6 +25,7 @@ services:
     restart: unless-stopped
     volumes:
       - mariadb:/var/lib/mysql
+    command: mariadbd --sql_mode="STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_AUTO_VALUE_ON_ZERO,NO_ENGINE_SUBSTITUTION"
 
 volumes:
   mariadb:
