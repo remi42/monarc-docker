@@ -24,7 +24,7 @@ services:
     restart: unless-stopped
     volumes:
       - mariadb:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   mariadb:
