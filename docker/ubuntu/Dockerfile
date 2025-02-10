@@ -36,7 +36,14 @@ RUN PATH_TO_MONARC='/var/lib/monarc/fo' && \
 # 7. Copy files to image
 COPY copy/ /
 
-# 8. Change owner
+# 8. Configurate MONARC
+RUN cd /var/lib/monarc/releases/MonarcAppFO-v2.13.2/config/autoload && \
+    mv local.php.dist local.php
+
+# 9. Configurate MONARC
+COPY database.local.php /var/lib/monarc/releases/MonarcAppFO-v2.13.2/config/autoload/database.local.php
+
+# 10. Change owner
 RUN chown -R www-data:www-data /var/lib/monarc
 
 EXPOSE 80
