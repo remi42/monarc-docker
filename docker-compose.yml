@@ -1,9 +1,12 @@
 services:
 
-  #monarc:
-  #  ports:
-  #    - 80:80
-  #    - 443:443
+  monarc:
+    build:
+      context: docker/ubuntu
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+      - 443:443
 
   mariadb:
     image: mariadb:11.4
