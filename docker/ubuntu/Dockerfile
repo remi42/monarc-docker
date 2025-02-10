@@ -46,4 +46,8 @@ COPY database.local.php /var/lib/monarc/releases/MonarcAppFO-v2.13.2/config/auto
 # 10. Change owner
 RUN chown -R www-data:www-data /var/lib/monarc
 
+# 11. Initial user
+RUN cd /var/lib/monarc/releases/MonarcAppFO-v2.13.2/ && \
+    php ./vendor/robmorgan/phinx/bin/phinx seed:run -c ./module/Monarc/FrontOffice/migrations/phinx.php
+
 EXPOSE 80
