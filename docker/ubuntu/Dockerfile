@@ -20,7 +20,20 @@ RUN apt-get -y install apache2 && \
 # 5. Install PHP and dependencies
 RUN apt-get install -y php8.1 php8.1-cli php8.1-common hp8.1-mysql php8.1-zip php8.1-gd php8.1-mbstring php8.1-curl php8.1-xml php8.1-bcmath php8.1-intl php8.1-imagic
 
-# 6. Copy files to image
+# 6. Installation of MONARC
+RUN PATH_TO_MONARC='/var/lib/monarc/fo' && \
+    PATH_TO_MONARC_DATA='/var/lib/monarc/fo-data' && \
+    MONARC_VERSION=$(curl --silent -H 'Content-Type: application/json' https://api.github.com/repos/monarc-project/MonarcAppFO/releases/latest | jq  -r '.tag_name') && \
+    MONARCFO_RELEASE_URL="https://github.com/monarc-project/MonarcAppFO/releases/download/$MONARC_VERSION/MonarcAppFO-$MONARC_VERSION.tar.gz" && \
+    mkdir -p /var/lib/monarc/releases/ && \
+    curl -sL $MONARCFO_RELEASE_URL -o /var/lib/monarc/releases/`basename $MONARCFO_RELEASE_URL` && \
+    mkdir /var/lib/monarc/releases/`basename $MONARCFO_RELEASE_URL | sed 's/.tar.gz//'` && \
+    tar -xzf /var/lib/monarc/releases/`basename $MONARCFO_RELEASE_URL` -C /var/lib/monarc/releases/`basename $MONARCFO_RELEASE_URL | sed 's/.tar.gz//'` && \
+    ln -s /var/lib/monarc/releases/`basename $MONARCFO_RELEASE_URL | sed 's/.tar.gz//'` $PATH_TO_MONARC  && \
+    mkdir -p $PATH_TO_MONARC_DATA/cache $PATH_TO_MONARC_DATA/DoctrineORMModule/Proxy $PATH_TO_MONARC_DATA/LazyServices/Proxy $PATH_TO_MONARC_DATA/import/files && \
+    ln -s $PATH_TO_MONARC_DATA $PATH_TO_MONARC/data
+
+# 7. Copy files to image
 COPY copy/ /
 
 EXPOSE 80
