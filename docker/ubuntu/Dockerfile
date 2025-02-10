@@ -36,4 +36,7 @@ RUN PATH_TO_MONARC='/var/lib/monarc/fo' && \
 # 7. Copy files to image
 COPY copy/ /
 
+# 8. Change owner
+RUN chown -R www-data:www-data /var/lib/monarc
+
 EXPOSE 80
