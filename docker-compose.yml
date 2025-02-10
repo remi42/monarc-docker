@@ -12,7 +12,7 @@ services:
     image: mariadb:11.4
     environment:
       - MYSQL_ROOT_PASSWORD=demo
-      - MYSQL_DATABASE=monarc
+      - MYSQL_DATABASE=monarc_cli
       - MYSQL_USER=monarc
       - MYSQL_PASSWORD=demo
     ports:
