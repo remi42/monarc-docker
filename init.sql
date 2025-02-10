@@ -1,0 +1,7 @@
+CREATE DATABASE IF NOT EXISTS monarc_cli;
+CREATE DATABASE IF NOT EXISTS monarc_common;
+
+GRANT ALL PRIVILEGES ON monarc_cli.* TO 'monarc'@'%';
+GRANT ALL PRIVILEGES ON monarc_common.* TO 'monarc'@'%';
+
+FLUSH PRIVILEGES;
