@@ -3,6 +3,7 @@ FROM ubuntu:22.04
 # 1. set environment to noninteractive
 ENV TERM=xterm
 ENV DEBIAN_FRONTEND=noninteractive
+ENV APACHE_RUN_DIR=/var/www
 
 # 2. update
 RUN apt-get update
@@ -36,18 +37,19 @@ RUN PATH_TO_MONARC='/var/lib/monarc/fo' && \
 # 7. Copy files to image
 COPY copy/ /
 
-# 8. Configurate MONARC
+# 8. Execution permission
+RUN chmod +x /usr/local/bin/start.sh
+
+# 9. Configurate MONARC
 RUN cd /var/lib/monarc/releases/MonarcAppFO-v2.13.2/config/autoload && \
     mv local.php.dist local.php
 
-# 9. Configurate MONARC
+# 10. Configurate MONARC
 COPY database.local.php /var/lib/monarc/releases/MonarcAppFO-v2.13.2/config/autoload/database.local.php
 
-# 10. Change owner
+# 11. Change owner
 RUN chown -R www-data:www-data /var/lib/monarc
 
-# 11. Initial user
-RUN cd /var/lib/monarc/releases/MonarcAppFO-v2.13.2/ && \
-    php ./vendor/robmorgan/phinx/bin/phinx seed:run -c ./module/Monarc/FrontOffice/migrations/phinx.php
-
 EXPOSE 80
+
+ENTRYPOINT ["/usr/local/bin/start.sh"]
