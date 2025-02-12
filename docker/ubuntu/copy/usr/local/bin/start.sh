@@ -4,8 +4,4 @@
 service apache2 start
 
 # Running
-echo "running..."
-while true
-do
-	sleep 1
-done
+tail -f /var/log/apache2/error.log
