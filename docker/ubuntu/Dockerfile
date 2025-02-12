@@ -22,21 +22,21 @@ COPY copy/ /
 # 4. Execution permission
 RUN chmod +x /usr/local/bin/start.sh
 
-# 5. Installation of MONARC port I
+# 5. Fetch MONARC latest version
 RUN MONARC_VERSION=$(curl --silent -H 'Content-Type: application/json' https://api.github.com/repos/monarc-project/MonarcAppFO/releases/latest | jq  -r '.tag_name') && \
     MONARCFO_RELEASE_URL="https://github.com/monarc-project/MonarcAppFO/releases/download/$MONARC_VERSION/MonarcAppFO-$MONARC_VERSION.tar.gz" && \
-    mkdir -p /var/lib/monarc/ && \
+    mkdir -p $PATH_TO_MONARC && \
     curl -sL $MONARCFO_RELEASE_URL -o /var/lib/monarc/monarc.tar.gz && \
     chown -R www-data:www-data /var/lib/monarc
 
 # 6. Installation of MONARC port II \
 USER www-data
-RUN tar -xzf /var/lib/monarc/monarc.tar.gz -C ./fo && \
+RUN tar -xzf /var/lib/monarc/monarc.tar.gz -C /var/lib/monarc/fo/ && \
     mkdir -p $PATH_TO_MONARC_DATA/cache $PATH_TO_MONARC_DATA/DoctrineORMModule/Proxy $PATH_TO_MONARC_DATA/LazyServices/Proxy $PATH_TO_MONARC_DATA/import/files && \
     ln -s $PATH_TO_MONARC_DATA $PATH_TO_MONARC/data
 
 # 6. Configurate MONARC part I
-RUN cd /var/lib/monarc/releases/MonarcAppFO-v2.13.2/config/autoload && \
+RUN cd /var/lib/monarc/fo/config/autoload && \
     mv local.php.dist local.php
 
 # 7. Configurate MONARC part II
