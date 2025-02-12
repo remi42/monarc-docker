@@ -35,4 +35,4 @@ echo "TODO"
 echo "$((`date +%s`-start))s"
 
 echo "# done"
-echo "==> open https://localhost/"
+echo "==> open http://localhost/"
