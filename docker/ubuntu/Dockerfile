@@ -4,7 +4,7 @@ FROM ubuntu:22.04
 ENV TERM=xterm
 ENV DEBIAN_FRONTEND=noninteractive
 ENV APACHE_RUN_DIR=/var/www
-ENV PATH_TO_MONARC=/var/lib/monarc/fo
+ENV PATH_TO_MONARC=/var/lib/monarc
 ENV PATH_TO_MONARC_DATA=/var/lib/monarc/data
 
 # 2. System updates & installation
@@ -31,15 +31,15 @@ RUN MONARC_VERSION=$(curl --silent -H 'Content-Type: application/json' https://a
 
 # 6. Installation of MONARC
 USER www-data
-RUN tar -xzf /var/lib/monarc/monarc.tar.gz -C /var/lib/monarc/fo/ && \
+RUN tar -xzf /var/lib/monarc/monarc.tar.gz -C /var/lib/monarc/ && \
     mkdir -p $PATH_TO_MONARC_DATA/cache $PATH_TO_MONARC_DATA/DoctrineORMModule/Proxy $PATH_TO_MONARC_DATA/LazyServices/Proxy $PATH_TO_MONARC_DATA/import/files
 
 # 7. Configurate MONARC part I
-RUN cd /var/lib/monarc/fo/config/autoload && \
+RUN cd /var/lib/monarc/config/autoload && \
     mv local.php.dist local.php
 
 # 8. Configurate MONARC part II
-COPY database.local.php /var/lib/monarc/fo/config/autoload/database.local.php
+COPY autoload/* /var/lib/monarc/config/autoload/
 
 EXPOSE 80
 
