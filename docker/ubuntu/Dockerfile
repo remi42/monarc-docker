@@ -29,7 +29,7 @@ RUN MONARC_VERSION=$(curl --silent -H 'Content-Type: application/json' https://a
     curl -sL $MONARCFO_RELEASE_URL -o /var/lib/monarc/monarc.tar.gz && \
     chown -R www-data:www-data /var/lib/monarc
 
-# 6. Installation of MONARC port II \
+# 6. Installation of MONARC
 USER www-data
 RUN tar -xzf /var/lib/monarc/monarc.tar.gz -C /var/lib/monarc/fo/ && \
     mkdir -p $PATH_TO_MONARC_DATA/cache $PATH_TO_MONARC_DATA/DoctrineORMModule/Proxy $PATH_TO_MONARC_DATA/LazyServices/Proxy $PATH_TO_MONARC_DATA/import/files && \
