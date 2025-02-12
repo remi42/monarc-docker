@@ -40,7 +40,7 @@ RUN cd /var/lib/monarc/fo/config/autoload && \
     mv local.php.dist local.php
 
 # 8. Configurate MONARC part II
-COPY database.local.php /var/lib/monarc/releases/MonarcAppFO-v2.13.2/config/autoload/database.local.php
+COPY database.local.php /var/lib/monarc/fo/config/autoload/database.local.php
 
 EXPOSE 80
 
