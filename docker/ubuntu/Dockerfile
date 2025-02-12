@@ -35,11 +35,11 @@ RUN tar -xzf /var/lib/monarc/monarc.tar.gz -C /var/lib/monarc/fo/ && \
     mkdir -p $PATH_TO_MONARC_DATA/cache $PATH_TO_MONARC_DATA/DoctrineORMModule/Proxy $PATH_TO_MONARC_DATA/LazyServices/Proxy $PATH_TO_MONARC_DATA/import/files && \
     ln -s $PATH_TO_MONARC_DATA $PATH_TO_MONARC/data
 
-# 6. Configurate MONARC part I
+# 7. Configurate MONARC part I
 RUN cd /var/lib/monarc/fo/config/autoload && \
     mv local.php.dist local.php
 
-# 7. Configurate MONARC part II
+# 8. Configurate MONARC part II
 COPY database.local.php /var/lib/monarc/releases/MonarcAppFO-v2.13.2/config/autoload/database.local.php
 
 EXPOSE 80
