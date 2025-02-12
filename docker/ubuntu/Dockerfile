@@ -44,4 +44,5 @@ COPY database.local.php /var/lib/monarc/releases/MonarcAppFO-v2.13.2/config/auto
 
 EXPOSE 80
 
+USER root
 ENTRYPOINT ["/usr/local/bin/start.sh"]
