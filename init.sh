@@ -36,3 +36,4 @@ echo "$((`date +%s`-start))s"
 
 echo "# done"
 echo "==> open http://localhost/"
+echo "The username is admin@admin.localhost and the password is admin."
