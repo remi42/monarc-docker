@@ -16,6 +16,28 @@ $appdir = getenv('APP_DIR') ?: '/var/lib/monarc';
 $package_json = json_decode(file_get_contents('./package.json'), true);
 
 return [
+
+    'doctrine' => [
+        'connection' => [
+            'orm_default' => [
+                'params' => [
+                    'host' => 'mariadb',
+                    'user' => 'monarc',
+                    'password' => 'demo',
+                    'dbname' => 'monarc_common',
+                ],
+            ],
+            'orm_cli' => [
+                'params' => [
+                    'host' => 'mariadb',
+                    'user' => 'monarc',
+                    'password' => 'demo',
+                    'dbname' => 'monarc_cli',
+                ],
+            ],
+        ],
+    ],
+
     'languages' => [
         'fr' => [
             'index' => 1,
