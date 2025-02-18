@@ -22,26 +22,23 @@ COPY copy/ /
 # 4. Execution permission
 RUN chmod +x /usr/local/bin/start.sh
 
-# 5. Fetch MONARC latest version
+# 5. Fetch & install MONARC latest version
 RUN MONARC_VERSION=$(curl --silent -H 'Content-Type: application/json' https://api.github.com/repos/monarc-project/MonarcAppFO/releases/latest | jq  -r '.tag_name') && \
     MONARCFO_RELEASE_URL="https://github.com/monarc-project/MonarcAppFO/releases/download/$MONARC_VERSION/MonarcAppFO-$MONARC_VERSION.tar.gz" && \
     mkdir -p $PATH_TO_MONARC && \
     curl -sL $MONARCFO_RELEASE_URL -o /var/lib/monarc/monarc.tar.gz && \
-    chown -R www-data:www-data /var/lib/monarc
+    tar -xzf /var/lib/monarc/monarc.tar.gz -C /var/lib/monarc/ && \
+    mkdir -p $PATH_TO_MONARC_DATA/cache $PATH_TO_MONARC_DATA/DoctrineORMModule/Proxy $PATH_TO_MONARC_DATA/LazyServices/Proxy $PATH_TO_MONARC_DATA/import/files && \
+    chown -R www-data:www-data /var/lib/monarc && \
+    rm /var/lib/monarc/monarc.tar.gz
 
-# 6. Installation of MONARC
-USER www-data
-RUN tar -xzf /var/lib/monarc/monarc.tar.gz -C /var/lib/monarc/ && \
-    mkdir -p $PATH_TO_MONARC_DATA/cache $PATH_TO_MONARC_DATA/DoctrineORMModule/Proxy $PATH_TO_MONARC_DATA/LazyServices/Proxy $PATH_TO_MONARC_DATA/import/files
-
-# 7. Configurate MONARC part I
+# 6. Configurate MONARC part I
 RUN cd /var/lib/monarc/config/autoload && \
     mv local.php.dist local.php
 
-# 8. Configurate MONARC part II
+# 7. Configurate MONARC part II
 COPY autoload/* /var/lib/monarc/config/autoload/
 
 EXPOSE 80
 
-USER root
 ENTRYPOINT ["/usr/local/bin/start.sh"]
