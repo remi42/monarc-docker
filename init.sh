@@ -30,8 +30,8 @@ done
 echo -e "\r$count   "
 echo "$((`date +%s`-start))s"
 
-echo "# bootstrap"
-echo "TODO"
+echo "# Create initial user"
+docker compose exec monarc bash -c "cd /var/lib/monarc && php ./vendor/robmorgan/phinx/bin/phinx seed:run -c ./module/Monarc/FrontOffice/migrations/phinx.php"
 echo "$((`date +%s`-start))s"
 
 echo "# done"
