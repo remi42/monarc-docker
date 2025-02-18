@@ -20,3 +20,11 @@ docker compose build --no-cache
 ```shell
 docker compose exec monarc bash
 ```
+
+## migrate
+
+```shell
+docker compose exec monarc "cd /var/lib/monarc && php ./vendor/robmorgan/phinx/bin/phinx migrate -c module/Monarc/FrontOffice/migrations/phinx.php"
+docker compose exec monarc "cd /var/lib/monarc && php ./vendor/robmorgan/phinx/bin/phinx migrate -c module/Monarc/Core/migrations/phinx.php"
+```
+
